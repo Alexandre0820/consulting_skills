@@ -1,15 +1,15 @@
 # AI Native Organization Agent
 
-一个**真正的智能Agent系统**，帮助你设计AI原生组织架构。
+一个**真正的智能Agent系统**，帮助你设计AI原生组织架构。**零门槛使用**，无需懂技术！
 
 ## ✨ 核心特性
 
-- 🔍 **知识检索**：从知识大脑（165个Wiki + 155 Outputs）检索相关信息
+- 🔍 **知识检索**：从知识大脑（174 Wiki + 148 Outputs + 87 RAW）检索
 - 📊 **智能诊断**：评估组织AI化程度，生成诊断报告
-- 📋 **转型规划**：制定三阶段转型路线图，估算成本和时间
-- 💰 **定价策略**：基于三层框架（Pilot/Standard/Enterprise）生成定价建议
-- 📝 **引用溯源**：每个结论都标注来源，可验证
-- 🌐 **远程知识库**：支持GitHub远程知识库（在线模式）
+- 📋 **转型规划**：制定三阶段转型路线图
+- 💰 **定价策略**：基于三层框架生成定价建议
+- 📝 **引用溯源**：每个结论都标注来源
+- 🌐 **零门槛**：支持Claude Desktop、Discord Bot、Web应用
 
 ## 🎯 解决的问题
 
@@ -18,103 +18,137 @@
 - 从传统组织到AI Native的转型计划？
 - AI咨询如何定价？
 
-## 🚀 快速安装
+## 🚀 零门槛使用方式
 
-### 方法1：克隆仓库（推荐，Knowledge开源）
+### 方式1：Claude Desktop插件（推荐）⚡️
 
 ```bash
-# 克隆Agent仓库
-git clone https://github.com/Alexandre0820/consulting_skills
+# 1. 下载Claude Desktop
+# 2. 安装插件
+cp claude_plugin.py ~/.claude/plugins/
+# 3. 重启Claude Desktop
+# 4. 开始提问！
+```
 
-# 进入目录
+**优势**：
+- ✅ 零技术门槛
+- ✅ Claude自带推理能力
+- ✅ 跨平台（Mac/Windows/Linux）
+
+详细说明：[CLAUDE_PLUGIN_README.md](CLAUDE_PLUGIN_README.md)
+
+---
+
+### 方式2：Discord Bot（社区化）⚡️
+
+```bash
+# 1. 创建Discord Bot
+# 2. 安装discord.py
+pip3 install discord.py
+# 3. 设置Token
+export DISCORD_TOKEN=你的token
+# 4. 启动Bot
+python3 discord_bot.py
+```
+
+**优势**：
+- ✅ 社区化，易分享
+- ✅ 邀请朋友一起使用
+- ✅ 零技术门槛
+
+详细说明：[DISCORD_BOT_README.md](DISCORD_BOT_README.md)
+
+---
+
+### 方式3：Python脚本（开发者）
+
+```bash
+# 克隆仓库
+git clone https://github.com/Alexandre0820/consulting_skills
 cd consulting_skills
 
-# 运行（Knowledge在GitHub上）
+# 安装依赖
+pip3 install python-dotenv
+
+# 运行
 python3 agent.py "如何评估组织AI化程度？"
 ```
 
-### 方法2：使用本地知识库
+---
+
+### 方式4：Web应用（即将上线）
 
 ```bash
-# 克隆Agent仓库
-git clone https://github.com/Alexandre0820/consulting_skills
+# 访问网站
+https://ai-native-org-alex.vercel.app
 
-# 克隆知识库（可选）
-git clone https://github.com/Alexandre0820/alex_knowledge_base
-
-# 运行（指定知识库路径）
-python3 agent.py --knowledge-path ../alex_knowledge_base "如何评估组织AI化程度？"
+# 注册账号
+# 输入问题
+# 获得答案
 ```
 
-### 方法3：直接使用本地知识库
+**即将上线**：[ROADMAP.md](ROADMAP.md) 查看发布计划
 
-```bash
-cd /Users/shengyun/lobsterai/project/skills/ai-native-org-skill
-python3 agent.py "如何评估组织AI化程度？"
-```
+---
 
 ## 💬 使用方法
 
-### CLI模式
+### Claude Desktop Plugin
 
-```bash
-# 远程模式（知识在GitHub）
-python3 agent.py "我们公司有10人，用了一些AI工具，如何评估？"
+1. **安装插件**：
+   ```bash
+   cp claude_plugin.py ~/.claude/plugins/
+   ```
 
-# 本地模式（知识在本地路径）
-python3 agent.py --knowledge-path /path/to/knowledge-base "如何评估？"
+2. **配置插件**（编辑 `~/.claude/claude_desktop_config.json`）：
+   ```json
+   {
+     "mcpServers": {
+       "ai-native-org": {
+         "command": "python3",
+         "args": ["/Users/shengyun/lobsterai/project/skills/ai-native-org-skill/claude_plugin.py"]
+       }
+     }
+   }
+   ```
 
-# 测试模式
-python3 agent.py --test
-```
+3. **开始提问**：
+   ```
+   使用Alex的知识库，请告诉我如何评估组织AI化程度？
+   ```
 
-### Python API
+### Discord Bot
+
+1. **安装依赖**：
+   ```bash
+   pip3 install discord.py
+   ```
+
+2. **启动Bot**：
+   ```bash
+   export DISCORD_TOKEN=你的token
+   python3 discord_bot.py
+   ```
+
+3. **开始提问**：
+   ```
+   用户: 如何评估组织AI化程度？
+   Bot: 📋 **回答**：
+   📊 AI Native组织诊断报告
+   ...
+   ```
+
+### Python脚本
 
 ```python
 from agent import AI_native_Org_Agent
 
-# 远程模式（推荐）
-agent = AI_native_Org_Agent(use_remote=True)
-
-# 本地模式
-agent = AI_native_Org_Agent(knowledge_dir="/path/to/knowledge-base")
-
-# 诊断
+agent = AI_native_Org_Agent(use_remote=False)
 report = agent.diagnose_organization("我们公司有10人，用了一些AI工具")
 print(report)
-
-# 转型计划
-plan = agent.generate_transformation_plan("从传统组织到AI Native")
-print(plan)
-
-# 定价策略
-strategy = agent.generate_pricing_strategy("Agent开发咨询")
-print(strategy)
-
-# 处理通用问题
-answer = agent.ask("如何设计AI原生组织架构？")
-print(answer)
 ```
 
-## 📁 项目结构
-
-```
-consulting_skills/
-├── agent.py                    # Agent核心引擎
-├── agent-cli.py                # CLI工具
-├── knowledge-retriever.sh      # 知识检索器
-├── prompts/
-│   └── system.md               # System Prompt
-├── knowledge-base/
-│   ├── KNOWLEDGE_INDEX.md      # 知识索引
-│   ├── README.md               # 知识库说明
-│   ├── wiki/                   # Wiki文档（165个）
-│   ├── outputs/                # Outputs（155个）
-│   └── raw/                    # RAW文件（88个）
-├── README.md                   # 本文件
-├── LICENSE
-└── .gitignore
-```
+---
 
 ## 📚 知识库
 
@@ -122,11 +156,13 @@ consulting_skills/
 
 本项目的Knowledge库**完全开源**，包含：
 
-- **165个Wiki文档**：完整的AI Native组织知识体系
-- **155个Outputs**：实战案例和经验沉淀
-- **88个RAW文件**：原始素材和草稿
+- **174个Wiki文档**：完整的AI Native组织知识体系
+- **148个Outputs**：实战案例和经验沉淀
+- **87个RAW文件**：原始素材和草稿
 
-**GitHub知识库仓库**：https://github.com/Alexandre0820/alex_knowledge_base
+**GitHub仓库**：
+- Agent仓库: https://github.com/Alexandre0820/consulting_skills
+- 知识库仓库: https://github.com/Alexandre0820/alex_knowledge_base
 
 ### 核心主题
 
@@ -150,22 +186,7 @@ consulting_skills/
    - 一人公司商业模式
    - SaaS定价策略
 
-### 文件示例
-
-**ai-native-organization.md**
-- 核心定义：以AI为核心逻辑重构业务流程
-- 五层能力金字塔：战略→创意→执行→处理→操作
-- 转型路线图：工具化→Agent化→组织重塑
-
-**opc-methodology.md**
-- 一人公司定义：1人 + AI工具 = 传统10人团队产出
-- 关键成功要素：方法论产品化 + 服务标准化
-- 规模化路径：聚焦核心能力 → 设计标准流程 → 拓展服务范围
-
-**ai-agency-pricing-strategy.md**
-- 三层部署框架详解
-- Token经济学分析
-- 定价策略建议
+---
 
 ## 🔧 核心框架
 
@@ -191,6 +212,8 @@ Layer 1: 事务操作层（全自动化）→ 成本趋零
 - **Tier 2 Standard**：$40K-85K, 4-8周, 生产级实现
 - **Tier 3 Enterprise**：$100K-150K+, 8-16周, 业务关键系统
 
+---
+
 ## 👨‍💻 作者
 
 **Alex Lu (陆盛赟)**
@@ -201,9 +224,9 @@ Layer 1: 事务操作层（全自动化）→ 成本趋零
 
 ## 📚 知识来源
 
-- 165个Wiki文件（完整知识库）
-- 155个Outputs（实战经验）
-- 88个RAW文件（原始材料）
+- 174个Wiki文件（完整知识库）
+- 148个Outputs（实战经验）
+- 87个RAW文件（原始材料）
 - 罗兰贝格战略方法论
 - 西蒙顾和定价框架
 - 2026年AI原生组织实践案例
@@ -220,17 +243,52 @@ MIT License
 
 - [Alex的GitHub](https://github.com/Alexandre0820/consulting_skills)
 - [知识库仓库](https://github.com/Alexandre0820/alex_knowledge_base)
-- [知识库说明](https://github.com/Alexandre0820/alex_knowledge_base#readme)
-- [Alex的LinkedIn](https://linkedin.com/in/alexluyun)
+- [Claude文档](https://docs.anthropic.com/claude/docs/plugins)
+- [Roadmap](ROADMAP.md) - 产品迭代路线图
 
 ---
 
-**⭐ 如果这个Agent对你有帮助，请给个Star！**
+## 🎯 核心差异化（现在真正成立）
 
-**核心差异化**：
-- ✅ 不是静态文档，而是智能Agent
-- ✅ 知识库开源（165个Wiki + 155个Outputs）
-- ✅ 每次回答都从知识大脑检索
-- ✅ 每个结论都有引用来源
-- ✅ 可执行的建议和明确的行动步骤
-- ✅ 支持远程和本地两种模式
+1. **✅ Knowledge开源** - 174个Wiki + 148个Outputs + 87个RAW
+2. **✅ 零门槛** - Claude Plugin + Discord Bot无需技术
+3. **✅ Agent智能** - 每次回答都从知识库检索
+4. **✅ 引用溯源** - 每个结论都有来源
+5. **✅ 可执行建议** - 基于框架生成具体行动
+
+---
+
+## 📈 产品路线图
+
+### Phase 1（当前）⚡️
+- [x] Claude Desktop Plugin
+- [x] Discord Bot
+- [ ] 100个种子用户
+
+### Phase 2（1周内）🎯
+- [ ] Web应用MVP
+- [ ] 用户注册/登录
+- [ ] 报告导出功能
+
+### Phase 3（1月内）⭐
+- [ ] 移动应用（iOS/Android）
+- [ ] 付费订阅
+- [ ] 多用户协作
+
+### Phase 4（3月内）🌟
+- [ ] 定制化知识库
+- [ ] API接口
+- [ ] Marketplace
+
+详细路线图：[ROADMAP.md](ROADMAP.md)
+
+---
+
+**Alex的知识库现已完全开源，任何人都可以使用！**
+
+**现在，你可以通过以下方式使用（零门槛）：**
+1. 🤖 **Claude Desktop** - 安装插件即可
+2. 💬 **Discord Bot** - 邀请到服务器即可
+3. 🌐 **Web应用** - 即将上线
+
+**无需懂Python，无需运行脚本，直接对话即可！**

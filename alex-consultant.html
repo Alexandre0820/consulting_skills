@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Alex知识分身 - AI咨询专家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header h1 { color: #667eea; font-size: 2.5em; margin-bottom: 10px; }
+        .header p { color: #666; font-size: 1.1em; }
+        .nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .nav button {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .nav button:hover, .nav button.active {
+            background: #667eea;
+            color: white;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .content.active { display: block; }
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .card h3 { color: #667eea; margin-bottom: 10px; }
+        .card p { color: #666; line-height: 1.6; margin-bottom: 8px; }
+        .question-box {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-left: 3px solid #28a745;
+        }
+        .question-box:hover { background: #d4edda; }
+        .question-box h4 { color: #28a745; margin-bottom: 5px; }
+        .answer-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid #667eea;
+            display: none;
+        }
+        .chat-area {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .message.user { background: #e3f2fd; margin-left: 20%; }
+        .message.bot { background: #e8f5e8; margin-right: 20%; }
+        .input-area { display: flex; gap: 10px; }
+        .input-area input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .input-area button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .feature-item h4 { color: #667eea; margin-bottom: 5px; }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .nav { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Alex知识分身</h1>
+            <p>AI咨询专家 - 零门槛使用专业知识</p>
+            <p style="font-size: 0.9em; color: #888;">前罗兰贝格战略咨询顾问 | 前西蒙顾和上海办公室负责人</p>
+        </div>
+
+        <div class="nav">
+            <button class="active" onclick="showTab('home')">🏠 首页</button>
+            <button onclick="showTab('chat')">💬 对话</button>
+            <button onclick="showTab('questions')">📋 常见问题</button>
+        </div>
+
+        <!-- 首页 -->
+        <div id="home" class="content active">
+            <div class="card">
+                <h3>🎯 您好！我是Alex的AI分身</h3>
+                <p>我可以为您提供专业的AI咨询服务，包括：</p>
+                <ul style="margin-left: 20px; line-height: 1.8; color: #666;">
+                    <li>🏢 AI组织架构设计</li>
+                    <li>💰 AI咨询项目定价</li>
+                    <li>📈 AI转型路径规划</li>
+                    <li>🤖 AI工具选型建议</li>
+                </ul>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>📊 AI诊断</h4>
+                    <p>评估组织AI化程度</p>
+                </div>
+                <div class="feature-item">
+                    <h4>💬 智能问答</h4>
+                    <p>专业咨询建议</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📚 知识库</h4>
+                    <p>409个专业文件</p>
+                </div>
+                <div class="feature-item">
+                    <h4>💰 定价策略</h4>
+                    <p>AI咨询报价</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🚀 快速开始</h3>
+                <p>点击上方"💬 对话"按钮，直接与我对话获取建议</p>
+                <p>或点击"📋 常见问题"查看预设的专业解答</p>
+            </div>
+        </div>
+
+        <!-- 对话页面 -->
+        <div id="chat" class="content">
+            <div class="card">
+                <h3>💬 与Alex的AI分身对话</h3>
+                <div class="chat-area" id="chatArea">
+                    <div class="message bot">
+                        <strong>🤖 Alex：</strong> 您好！我是Alex的AI分身。我可以为您提供AI组织架构、咨询定价、转型策略等专业建议。请输入您的问题！
+                    </div>
+                </div>
+                <div class="input-area">
+                    <input type="text" id="userInput" placeholder="请输入您的问题..." onkeypress="if(event.key==='Enter')sendMessage()">
+                    <button onclick="sendMessage()">发送</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💡 示例问题</h3>
+                <p>• 咨询公司如何做AI Native的组织架构？</p>
+                <p>• AI咨询服务如何定价？</p>
+                <p>• 一人公司如何用AI实现规模化？</p>
+                <p>• 如何评估组织的AI化程度？</p>
+            </div>
+        </div>
+
+        <!-- 常见问题 -->
+        <div id="questions" class="content">
+            <div class="card">
+                <h3>📋 常见问题及解答</h3>
+                <p>点击问题查看详细答案</p>
+            </div>
+
+            <div class="question-box" onclick="showAnswer('q1')">
+                <h4>🏢 咨询公司做AI Native的组织架构，应当如何来做？</h4>
+                <p>点击查看详细解答</p>
+            </div>
+
+            <div class="question-box" onclick="showAnswer('q2')">
+                <h4>💰 AI咨询服务如何定价？</h4>
+                <p>点击查看详细解答</p>
+            </div>
+
+            <div class="question-box" onclick="showAnswer('q3')">
+                <h4>🎯 一人公司如何用AI实现规模化？</h4>
+                <p>点击查看详细解答</p>
+            </div>
+
+            <div class="question-box" onclick="showAnswer('q4')">
+                <h4>🚀 什么是AI Native组织？</h4>
+                <p>点击查看详细解答</p>
+            </div>
+
+            <div id="answerBox" class="answer-box">
+                <h3 id="answerTitle"></h3>
+                <div id="answerContent"></div>
+                <button onclick="hideAnswer()" style="margin-top: 15px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">收起答案</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换标签页
+        function showTab(tabName) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 发送消息
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatArea = document.getElementById('chatArea');
+            
+            // 添加用户消息
+            chatArea.innerHTML += `<div class="message user"><strong>👤 您：</strong> ${message}</div>`;
+            input.value = '';
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // 生成回复
+            setTimeout(() => {
+                const response = generateResponse(message);
+                chatArea.innerHTML += `<div class="message bot"><strong>🤖 Alex：</strong> ${response}</div>`;
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }, 500);
+        }
+
+        // 生成回复
+        function generateResponse(q) {
+            q = q.toLowerCase();
+            if (q.includes('架构') || q.includes('组织')) {
+                return `根据我的经验，咨询公司做AI Native组织架构需要分三个阶段：<br><br>
+                <strong>1. 试点阶段（1-3个月）：</strong><br>
+                • 选择1-2个核心业务场景进行AI试点<br>
+                • 培训团队掌握基本的AI工具使用<br>
+                • 建立AI应用标准和规范<br><br>
+                <strong>2. 推广阶段（3-6个月）：</strong><br>
+                • 将成功的AI经验复制到更多项目<br>
+                • 建立AI工具集和最佳实践库<br>
+                • 重构工作流程，融入AI元素<br><br>
+                <strong>3. 原生阶段（6-12个月）：</strong><br>
+                • 构建AI原生业务模式<br>
+                • 开发专属的AI咨询方法论<br>
+                • 建立AI驱动的核心竞争力`;
+            }
+            else if (q.includes('定价') || q.includes('价格') || q.includes('报价')) {
+                return `AI咨询定价需要综合考虑多个因素：<br><br>
+                <strong>三层定价框架：</strong><br>
+                • <strong>试点项目：</strong>15-30万元，2-4周，验证可行性<br>
+                • <strong>标准项目：</strong>60-120万元，2-3个月，标准实施<br>
+                • <strong>企业项目：</strong>120万元以上，3-6个月，全面转型<br><br>
+                <strong>定价公式：</strong><br>
+                基础价格 × 复杂度系数 × 行业系数 × 时间系数 × 定制化系数<br><br>
+                <strong>建议：</strong><br>
+                • 初期可以按天收费（1-2万/天）<br>
+                • 建立价值导向的定价模式<br>
+                • 考虑客户ROI和成本节省`;
+            }
+            else if (q.includes('一人') || q.includes('个人') || q.includes('规模')) {
+                return `一人公司用AI实现规模化的核心是OPC方法论：<br><br>
+                <strong>O (One) - 个人优势定位：</strong><br>
+                • 找到您的核心专长领域<br>
+                • 建立个人品牌和专业度<br>
+                • 确定AI可以辅助的方向<br><br>
+                <strong>P (Process) - AI赋能流程：</strong><br>
+                • 将服务流程标准化<br>
+                • 用AI工具自动化各个环节<br>
+                • 建立质量控制机制<br><br>
+                <strong>C (Customer) - 客户获取：</strong><br>
+                • 利用AI进行市场分析<br>
+                • 自动化营销和获客<br>
+                • 标准化客户服务`;
+            }
+            else {
+                return `这是一个很好的问题！作为AI咨询专家，我建议您：<br><br>
+                <strong>1. 明确业务目标：</strong><br>
+                • 您希望通过AI解决什么问题？<br>
+                • 预期的ROI是什么？<br><br>
+                <strong>2. 评估现状：</strong><br>
+                • 当前的人力资源配置<br>
+                • 现有的技术水平<br><br>
+                <strong>3. 制定实施计划：</strong><br>
+                • 从小处开始，快速验证<br>
+                • 建立标准和流程<br>
+                • 持续迭代优化<br><br>
+                如果您能提供更具体的背景信息，我可以给出更有针对性的建议！`;
+            }
+        }
+
+        // 显示答案
+        function showAnswer(qid) {
+            const answers = {
+                'q1': {
+                    title: '🏢 咨询公司AI Native组织架构设计',
+                    content: `<strong>核心原则：</strong><br>
+                    咨询公司转型AI Native需要重新设计组织架构，重点从人力密集型转向AI赋能型。<br><br>
+                    <strong>组织架构设计：</strong><br>
+                    <strong>1. 三层组织结构</strong><br>
+                    战略层（AI判断）→ 执行层（AI编排）→ 操作层（AI执行）<br><br>
+                    <strong>2. 关键角色转型</strong><br>
+                    • 传统咨询顾问 → AI咨询顾问<br>
+                    • 项目经理 → AI项目经理<br>
+                    • 研究员 → AI研究员<br><br>
+                    <strong>3. 实施建议</strong><br>
+                    • 第一阶段（1-3个月）：培训现有团队，引入AI工具<br>
+                    • 第二阶段（3-6个月）：重构工作流程，建立AI标准<br>
+                    • 第三阶段（6-12个月）：全面AI化，建立核心竞争力`
+                },
+                'q2': {
+                    title: '💰 AI咨询服务定价策略',
+                    content: `<strong>三层部署框架：</strong><br>
+                    • <strong>Pilot层：</strong>15-30万，2-4周，验证可行性<br>
+                    • <strong>Standard层：</strong>60-120万，2-3个月，标准实施<br>
+                    • <strong>Enterprise层：</strong>120万+，3-6个月，全面转型<br><br>
+                    <strong>定价考虑因素：</strong><br>
+                    基础价格 × 复杂度系数 × 行业系数 × 时间系数 × 定制化系数<br><br>
+                    <strong>具体价格示例：</strong><br>
+                    • 试点项目：15-30万（简单验证）<br>
+                    • 标准项目：60-120万（成熟实施）<br>
+                    • 企业项目：120万+（全面转型）<br><br>
+                    <strong>定价建议：</strong><br>
+                    • 试点项目：按天收费，1-2万/天<br>
+                    • 标准项目：按项目收费，包含AI工具使用<br>
+                    • 企业项目：按年收费，长期合作`
+                },
+                'q3': {
+                    title: '🎯 一人公司AI化策略 - OPC方法论',
+                    content: `<strong>OPC核心框架：</strong><br>
+                    • <strong>O (One)：</strong>一个人的核心优势<br>
+                    • <strong>P (Process)：</strong>AI赋能的标准化流程<br>
+                    • <strong>C (Customer)：</strong>AI服务的客户群体<br><br>
+                    <strong>实施步骤：</strong><br>
+                    <strong>1. 优势定位</strong><br>
+                    • 找到您的核心专长领域<br>
+                    • 确定AI可以辅助的方向<br>
+                    • 建立个人品牌和专业度<br><br>
+                    <strong>2. 流程标准化</strong><br>
+                    • 将服务流程模块化<br>
+                    • 用AI工具标准化每个环节<br>
+                    • 建立质量控制机制<br><br>
+                    <strong>3. 客户获取</strong><br>
+                    • 利用AI进行市场分析<br>
+                    • 自动化营销和获客<br>
+                    • 标准化客户服务`
+                },
+                'q4': {
+                    title: '🚀 AI Native组织定义与转型',
+                    content: `<strong>什么是AI Native组织：</strong><br>
+                    AI Native组织是指从设计之初就深度集成AI技术，将AI作为核心竞争力的组织。<br><br>
+                    <strong>五层能力金字塔：</strong><br>
+                    1. <strong>战略判断层：</strong>AI辅助决策<br>
+                    2. <strong>创意创新层：</strong>AI增强创意<br>
+                    3. <strong>执行编排层：</strong>AI自动化流程<br>
+                    4. <strong>信息处理层：</strong>AI分析数据<br>
+                    5. <strong>事务操作层：</strong>AI执行任务<br><br>
+                    <strong>转型路径：</strong><br>
+                    传统组织 → 工具化组织 → AI赋能组织 → AI驱动组织 → AI原生组织`
+                }
+            };
+
+            const ans = answers[qid];
+            if (ans) {
+                document.getElementById('answerTitle').innerHTML = ans.title;
+                document.getElementById('answerContent').innerHTML = ans.content;
+                document.getElementById('answerBox').style.display = 'block';
+                document.getElementById('answerBox').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function hideAnswer() {
+            document.getElementById('answerBox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
